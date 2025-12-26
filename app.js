@@ -6,13 +6,15 @@ const auth = require('./middleware/auth');
 const authRoutes = require('./Routes/Auth.route');
 const profRoutes = require('./Routes/profile.route')
 const cookieParser = require('cookie-parser');
-
+const reqRoutes = require("./Routes/request.route")
 app.use(express.json());
 app.use(cookieParser());
 
 // Signup and Login Routes(API Gateway)
 app.use('/auth', authRoutes); 
 app.use('/profile', profRoutes); 
+app.use('/request', reqRoutes); 
+
 
 
 

@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const signup = async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { name,username, password, email } = req.body;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).send("Enter a valid email");
@@ -22,6 +22,7 @@ const signup = async (req, res) => {
 
     // Create new user
     const newUser = new User({
+      name,
       username,
       password: hashedPassword,
       email,
