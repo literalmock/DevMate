@@ -49,5 +49,28 @@ Router.post("/sent/:status/:userId", auth , async (req,res)=>{
     res.json({"message": `successfullly added request to ${toUserId}` })
 });
 
+Router.post("/review/:status/:requestUserId", auth , async (req,res)=>{
+    const currUserId = req.user._id;
+    const status = req.params.status.toLowerCase();
+    const requestUserId = req.params.requestUserId;
+    const isAllowed = ["accepted","rejected"]
+    if(!isAllowed.includes(status)){
+        return res.status(400).send({message : "status not allowed"})
+    }
+    const con_request = await connectionRequest.findOne({
+        fromUserId: requestUserId, toUserId: currUserId 
+    })
+    if (!con_request){
+        res.send("No connection request found")
+    }
+    if(con_request.status !== "interested"){
+        return res.status(400).send("Request already reviewed")
+    }
+    
+    con_request.status = status;
+    await con_request.save();
+
+    return res.send(`Connection request ${status} successfully`)
+});
 
 module.exports = Router;

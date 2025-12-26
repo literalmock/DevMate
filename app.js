@@ -5,8 +5,10 @@ const mongoose = require('./config/database');
 const auth = require('./middleware/auth');
 const authRoutes = require('./Routes/Auth.route');
 const profRoutes = require('./Routes/profile.route')
-const cookieParser = require('cookie-parser');
 const reqRoutes = require("./Routes/request.route")
+const userRoutes = require('./Routes/user.route')
+
+const cookieParser = require('cookie-parser');
 app.use(express.json());
 app.use(cookieParser());
 
@@ -14,6 +16,7 @@ app.use(cookieParser());
 app.use('/auth', authRoutes); 
 app.use('/profile', profRoutes); 
 app.use('/request', reqRoutes); 
+app.use('/account', userRoutes);
 
 
 
