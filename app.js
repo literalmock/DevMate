@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use('/auth', authRoutes); 
 app.use('/profile', profRoutes); 
 app.use('/request', reqRoutes); 
-app.use('/account', userRoutes);
+app.use('/user', userRoutes);
 
 
 

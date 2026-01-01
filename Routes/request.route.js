@@ -60,6 +60,7 @@ Router.post("/review/:status/:requestUserId", auth , async (req,res)=>{
     const con_request = await connectionRequest.findOne({
         fromUserId: requestUserId, toUserId: currUserId 
     })
+    console.log(con_request);
     if (!con_request){
         res.send("No connection request found")
     }

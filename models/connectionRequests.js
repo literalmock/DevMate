@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 const connectionRequestSchema = new mongoose.Schema({
   fromUserId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
-  toUserId: { type: mongoose.Schema.Types.ObjectId, required: true,message: "Invalid format" },
+  toUserId: { type: mongoose.Schema.Types.ObjectId,
+    ref:"User", 
+    required: true,
+     message: "Invalid format" },
   status: {
     type: String,
     required: true,
