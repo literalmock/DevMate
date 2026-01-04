@@ -3,6 +3,7 @@ const Router = require("express").Router();
 const connectionRequest = require("../models/connectionRequests")
 const User = require("../models/user.js")
 
+const USER_SAFE_DATA = "name username email phoneno age gender photoURL about skills createdAt "
 Router.get('/requests/received',auth,async (req,res)=> {
     const loggedInUserId = req.user._id;
 
@@ -38,19 +39,56 @@ Router.get('/connections',auth,async (req,res)=> {
     }
     let correct_connections = connections.map(n => {
         if (n.toUserId.equals(loggedInUserId)){
-            console.log("tr")
             return n.fromUserId
         }
         if(n.fromUserId.equals(loggedInUserId)){
-            console.log("downtr")
             return n.toUserId
         }
     })
     res.status(200).json({message: "Successfully fetched connections ",
         connections: correct_connections
     })
-
 }
-);
+)
+Router.get('/feed',auth,async (req,res)=>{
+    // User 
+    // 1. Show request from existing ids in db
+    // 2. don't show logged in user profile/self profile
+    // 3. don't show already ignored/interested/accepted/rejected profile
+    // 4.  
+    const loggedInUserId = req.user._id;
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 5 ;
+    let skip = (page-1)*limit
+    // --we can also use fetch("/user/connections")
+    const dontShowprofile = await connectionRequest.find({
+        $or: [{fromUserId: loggedInUserId},
+            {toUserId:loggedInUserId}]
+    })
+    // .populate("fromUserId","name username").populate("toUserId","name username")
+    const dns = new Set();
+    dns.add(loggedInUserId)
+    dontShowprofile.map((n)=>{
+        if ((n.fromUserId._id).equals(loggedInUserId)){
+            dns.add(n.toUserId._id)
+        }else{
+           dns.add(n.fromUserId._id) 
+        }
+    })
+    const dnsArray = [...dns];
+    const users = await User.find({
+         _id: { $nin: dnsArray }
+    })
+    .select(USER_SAFE_DATA)
+    .skip(skip)
+    .limit(limit)
+
+    res.status(200).send(users)
+    // const getrelevantaccount = User.find({
+        
+    // })
+    
+}
+)
 
 module.exports = Router;
