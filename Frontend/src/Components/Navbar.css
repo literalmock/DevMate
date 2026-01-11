@@ -1,0 +1,182 @@
+/* =====================
+   NAVBAR WRAPPER
+===================== */
+.navbar-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 14px;
+}
+
+/* =====================
+   NAVBAR CONTAINER
+===================== */
+.navbar-inner {
+  max-width: 1200px;
+  margin: auto;
+  background: #fff9e8;
+  border: 4px solid #2b2b2b;
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 #2b2b2b;
+  padding: 12px 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* =====================
+   LEFT
+===================== */
+.logo-text {
+  font-size: 26px;
+  font-weight: 900;
+  color: #2b2b2b;
+}
+
+/* =====================
+   RIGHT
+===================== */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* SEARCH */
+.nav-search {
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 3px solid #2b2b2b;
+  outline: none;
+  background: #fff;
+}
+
+/* =====================
+   THEME TOGGLE
+===================== */
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid #2b2b2b;
+  background: #fff9e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 #2b2b2b;
+  transition: all 0.25s ease;
+}
+
+.theme-toggle .icon {
+  font-size: 18px;
+  transition: transform 0.35s ease;
+}
+
+.theme-toggle:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #2b2b2b;
+}
+
+.theme-toggle.dark .icon {
+  transform: rotate(180deg);
+}
+
+/* =====================
+   PROFILE + DROPDOWN
+===================== */
+.profile {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid #2b2b2b;
+  display: block;
+}
+
+/* DROPDOWN */
+.profile-menu {
+  position: absolute;
+  right: 0;
+  top: 54px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+
+  background: #fff9e8;
+  border: 3px solid #2b2b2b;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 4px 4px 0 #2b2b2b;
+}
+
+.profile:hover .profile-menu {
+  display: flex;
+}
+
+.profile-menu span {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #2b2b2b;
+}
+
+.profile-menu span:hover {
+  background: #f4db6c;
+}
+
+.profile-menu .danger {
+  color: #c0392b;
+}
+
+/* =====================
+   DARK THEME
+===================== */
+body.dark-theme {
+  background: #1f1f1f;
+}
+
+body.dark-theme .navbar-inner {
+  background: linear-gradient(135deg, #0f2a32, #1d3f47);
+  border-color: #f4db6c;
+  box-shadow: 6px 6px 0 rgba(244, 219, 108, 0.9);
+}
+
+body.dark-theme .logo-text {
+  color: #ffffff;
+}
+
+body.dark-theme .nav-search {
+  background: rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  border-color: #f4db6c;
+}
+
+body.dark-theme .nav-search::placeholder {
+  color: #d0d0d0;
+}
+
+body.dark-theme .theme-toggle {
+  background: #1f1f1f;
+  border-color: #f4db6c;
+  box-shadow: 3px 3px 0 #f4db6c;
+}
+
+body.dark-theme .profile-menu {
+  background: #2a2a2a;
+  border-color: #f4db6c;
+}
+
+body.dark-theme .profile-menu span {
+  color: #f4db6c;
+}
+
+body.dark-theme .profile-menu span:hover {
+  background: #444;
+}

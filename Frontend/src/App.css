@@ -1,2 +1,91 @@
 @plugin "daisyui";
 @import "tailwindcss";
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global body styling */
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  color: white;
+}
+
+
+/* Animated background effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      rgba(0, 255, 255, 0.15) 1px,
+      transparent 1px
+    ),
+    radial-gradient(rgba(0, 150, 255, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px, 120px 120px;
+  animation: moveBg 25s linear infinite;
+  z-index: -1;
+}
+
+/* Background movement */
+@keyframes moveBg {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 500px 500px, -500px -500px;
+  }
+}
+
+/* Utility animation (used by login card) */
+.animate {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth link styling */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Button focus fix */
+button:focus,
+input:focus {
+  outline: none;
+}
+
+/* Optional scrollbar polish */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
