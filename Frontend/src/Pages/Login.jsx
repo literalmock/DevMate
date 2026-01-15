@@ -1,25 +1,33 @@
 import { useState } from "react";
 import "./Login.css";
+import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("shivam01@gmail.com");
+  const [password, setPassword] = useState("random123");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password });
+    // Handle login logic here
+    axios.post('http://localhost:3000/auth/login', { email, password }, { withCredentials: true })
+      .then(response => {
+        console.log('Login successful:', response.data);
+      })
+      .catch(error => {
+        console.error('Login error:', error);
+      }); 
   };
 
   return (
     <div className="login-page">
       <div className="login-card">
-        <h2 className="login-title">Welcome Back</h2>
+        <h1 className="login-title">Welcome back</h1>
         <p className="login-subtitle">
-          Please sign in to continue
+          Sign in to continue to Devmate
         </p>
 
-        <form onSubmit={handleSubmit}>
-          <div className="field">
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="login-field">
             <label>Email</label>
             <input
               type="email"
@@ -30,7 +38,7 @@ const Login = () => {
             />
           </div>
 
-          <div className="field">
+          <div className="login-field">
             <label>Password</label>
             <input
               type="password"
@@ -41,11 +49,12 @@ const Login = () => {
             />
           </div>
 
-          <button className="login-btn">Login</button>
+          <button className="login-btn" onClick={handleSubmit} type="submit">
+            Login
+          </button>
         </form>
       </div>
     </div>
   );
 };
-
 export default Login;
