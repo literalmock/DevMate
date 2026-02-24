@@ -65,7 +65,7 @@ const login = async (req, res) => {
       sameSite: "strict",
       maxAge: 60 * 60 * 1000, // 1 hour
     });
-    return res.status(200).send("login Successful");
+    return res.status(200).json({ message: "Login successful", userdetail });
   } catch (err) {
     console.log(err);
     return res.status(500).send("some error occured");

@@ -1,60 +1,98 @@
 import { useState } from "react";
-import "./Login.css";
-import axios from "axios";
-
+import axios from 'axios'
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
-  const [email, setEmail] = useState("shivam01@gmail.com");
-  const [password, setPassword] = useState("random123");
-
-  const handleSubmit = (e) => {
+    const [emailId,setEmailId] = useState('shivam01@gmail.com')
+    const [password,setPassword] = useState('random123')
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleSubmit = (e) => {
     e.preventDefault();
     // Handle login logic here
-    axios.post('http://localhost:3000/auth/login', { email, password }, { withCredentials: true })
+    axios.post('http://localhost:3000/auth/login', { email: emailId, password }, { withCredentials: true })
       .then(response => {
-        console.log('Login successful:', response.data);
+        console.log('Login successful:', response.data.message);
+        dispatch(addUser(response.data.userdetail))
+        navigate('/');
       })
       .catch(error => {
         console.error('Login error:', error);
       }); 
   };
+    return (
+    <div className="bg-base-200 min-h-screen flex items-center justify-center">
+      <div className="card w-96 bg-base-100 shadow-2xl">
+        <div className="card-body">
+          <h2 className="text-2xl font-bold text-center">Login</h2>
 
-  return (
-    <div className="login-page">
-      <div className="login-card">
-        <h1 className="login-title">Welcome back</h1>
-        <p className="login-subtitle">
-          Sign in to continue to Devmate
-        </p>
+          <form>
+            {/* Email */}
+            <div className="form-control mt-4">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="input input-bordered"
+                value={emailId}
+                onChange={(e) => setEmailId(e.target.value)}
+                required
+              />
+            </div>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-field">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+            {/* Password */}
+            <div className="form-control mt-4">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                className="input input-bordered"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <label className="label">
+                <a href="#" className="label-text-alt link link-hover">
+                  Forgot password?
+                </a>
+              </label>
+            </div>
 
-          <div className="login-field">
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+            {/* Remember Me */}
+            <div className="form-control mt-2">
+              <label className="cursor-pointer label">
+                <span className="label-text">Remember me</span>
+                <input
+                  type="checkbox"
+                  className="checkbox checkbox-primary"
+                />
+              </label>
+            </div>
 
-          <button className="login-btn" onClick={handleSubmit} type="submit">
-            Login
-          </button>
-        </form>
+            {/* Button */}
+            <div className="form-control mt-6">
+              <button className="btn btn-primary w-full" onClick={handleSubmit}>
+                Login
+              </button>
+            </div>
+
+            {/* Register Link */}
+            <p className="text-center mt-4 text-sm">
+              Don't have an account?{" "}
+              <a href="#" className="link link-primary">
+                Register
+              </a>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );
-};
+}
+  
 export default Login;
