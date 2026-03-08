@@ -1,26 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
-    const [emailId,setEmailId] = useState('shivam01@gmail.com')
+    const [emailId,setEmailId] = useState('neha05@gmail.com')
     const [password,setPassword] = useState('random123')
+    const [error, setError] = useState(' ');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((store) => store.user)
+    
     const handleSubmit = (e) => {
     e.preventDefault();
     // Handle login logic here
-    axios.post('http://localhost:3000/auth/login', { email: emailId, password }, { withCredentials: true })
+    axios.post(import.meta.env.VITE_BASE_URL + '/auth/login', { email: emailId, password }, { withCredentials: true })
       .then(response => {
         console.log('Login successful:', response.data.message);
         dispatch(addUser(response.data.userdetail))
-        navigate('/');
+        navigate('/feed');
       })
       .catch(error => {
-        console.error('Login error:', error);
+        console.error('Login error:', error?.response?.data || error.message);
+        setError(error?.response?.data || 'Something went wrong');
       }); 
   };
+
+// redirects user to feed it already logged in 
+  const redirecttoFeed = () =>{
+      if(user){
+        navigate('/feed')
+      }
+  }
+  useEffect(()=>{
+    redirecttoFeed()
+  },[redirecttoFeed])
     return (
     <div className="bg-base-200 min-h-screen flex items-center justify-center">
       <div className="card w-96 bg-base-100 shadow-2xl">
@@ -62,17 +76,7 @@ const Login = () => {
                 </a>
               </label>
             </div>
-
-            {/* Remember Me */}
-            <div className="form-control mt-2">
-              <label className="cursor-pointer label">
-                <span className="label-text">Remember me</span>
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-primary"
-                />
-              </label>
-            </div>
+            <p className="text-red-500">{error}</p>
 
             {/* Button */}
             <div className="form-control mt-6">
