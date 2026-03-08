@@ -32,7 +32,7 @@ Router.get('/connections',auth,async (req,res)=> {
     const connections = await connectionRequest.find({
         $or : [{toUserId: loggedInUserId, status: "accepted"},
             {fromUserId: loggedInUserId, status: "accepted"}]
-    }).populate("toUserId","name email").populate("fromUserId", "name email");
+    }).populate("toUserId", "name age gender photoURL about skills").populate("fromUserId", "name age gender photoURL about skills");
 
     if (!connections){
         res.send("No connections found")

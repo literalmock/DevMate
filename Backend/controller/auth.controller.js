@@ -49,7 +49,7 @@ const login = async (req, res) => {
     //User exists
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      return res.status(400).json({ message: "User Does not exist" });
+      return res.status(400).send("User Does Not Exist");
     }
     //use bcrypt to compare password
     const userdetail = await User.findOne({ email: email });

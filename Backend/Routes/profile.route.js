@@ -12,7 +12,7 @@ Router.get("/view", auth, async (req, res) => {
 
 Router.patch("/edit", auth, async (req, res) => {
   const user = req.user;
-  const { name, phoneno, skills, age, gender, about, photoUrl } = req.body;
+  const { name, phoneno, skills, age, gender, about, photoURL } = req.body;
   const validate = profileEditSchema.safeParse({
     name,
     phoneno,
@@ -20,7 +20,7 @@ Router.patch("/edit", auth, async (req, res) => {
     age,
     gender,
     about,
-    photoUrl,
+    photoURL,
   });
   if (!validate.success) {
     return res.status(400).send("Invalid Credentials");
@@ -39,7 +39,7 @@ Router.patch("/edit", auth, async (req, res) => {
               age: age,
               gender: gender,
               about: about,
-              photoUrl: photoUrl,
+              photoURL: photoURL,
             },
             { new: true }
         );

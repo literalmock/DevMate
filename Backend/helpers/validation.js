@@ -9,7 +9,7 @@ const profileEditSchema = z.object({
     // email: z.string().email("Enter a valid email").optional(),
     password: z.string().min(6, "Password must be at least 6 characters long").optional(),
     about: z.string().max(300, "About section cannot exceed 300 characters").optional(),
-    photoUrl: z.string().url("Enter a valid URL").optional()
+    photoURL: z.string().url("Enter a valid URL").optional()
 });
 
 module.exports = {
