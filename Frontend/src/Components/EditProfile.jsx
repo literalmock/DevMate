@@ -11,18 +11,37 @@ const EditProfile = ({user}) => {
     const [password,setPassword] = useState('')
     const [error, setError] = useState(' ');
     const [name, setName] = useState(user.name || '')
-    const [phoneNo, setPhoneNo] = useState(user.phoneno || ' ');
-    const [photoUrl, setPhotoUrl] = useState(user.photoURL || ' ');
-    const [about, setAbout] = useState(user.about || ' ');
-    const [skills, setSkills] = useState(user.skills);
-    const [age, setAge] = useState(user.age || ' ');
-    const [gender, setGender] = useState(user.gender || ' ');
+  const [phoneNo, setPhoneNo] = useState(user.phoneno || '');
+  const [photoUrl, setPhotoUrl] = useState(user.photoURL || '');
+  const [about, setAbout] = useState(user.about || '');
+  const [skills, setSkills] = useState(Array.isArray(user.skills) ? user.skills.join(', ') : (user.skills || ''));
+  const [age, setAge] = useState(user.age || '');
+  const [gender, setGender] = useState(user.gender || '');
     const [showToast, setShowToast] = useState(false);
 
     const dispatch = useDispatch();
     const handleSubmit = (e) => {
     e.preventDefault();
-    axios.patch(import.meta.env.VITE_BASE_URL + '/profile/edit', { name, email: emailId, phoneno: phoneNo, photoURL: photoUrl, about,skills }, { withCredentials: true }).then(
+    const payload = {
+      name: name.trim(),
+      phoneno: phoneNo.trim(),
+      photoURL: photoUrl.trim(),
+      about: about.trim(),
+      skills: skills
+        .split(',')
+        .map((skill) => skill.trim())
+        .filter(Boolean),
+    };
+
+    // Remove empty optional fields so backend optional validation can pass cleanly.
+    Object.keys(payload).forEach((key) => {
+      const value = payload[key];
+      if (value === '' || (Array.isArray(value) && value.length === 0)) {
+        delete payload[key];
+      }
+    });
+
+    axios.patch(import.meta.env.VITE_BASE_URL + '/profile/edit', payload, { withCredentials: true }).then(
         response => {
             console.log('Profile updated successfully:', response.data);
             dispatch(addUser(response.data.field))
@@ -38,13 +57,18 @@ const EditProfile = ({user}) => {
     )
   };
 useEffect(()=>{
+    const parsedSkills = skills
+      .split(',')
+      .map((skill) => skill.trim())
+      .filter(Boolean);
+
      dispatch(addUser({
       name: name,
       email: emailId,
       phoneno: phoneNo,
       photoURL: photoUrl,
       about: about,
-      skills: skills,
+      skills: parsedSkills,
       age: age,
       gender: gender
      })) 
@@ -123,9 +147,7 @@ useEffect(()=>{
                 placeholder="Enter your skills (comma separated)"
                 className="input input-bordered"
                 value={skills}
-                onChange={(e) => {
-                  return setSkills(e.target.value.split(',').map(skill => skill.trim()));
-                }}
+                onChange={(e) => setSkills(e.target.value)}
                 required
               />
             </div>

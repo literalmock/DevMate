@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios'
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link} from "react-router-dom";
 const Login = () => {
     const [emailId,setEmailId] = useState('neha05@gmail.com')
     const [password,setPassword] = useState('random123')
@@ -88,9 +88,9 @@ const Login = () => {
             {/* Register Link */}
             <p className="text-center mt-4 text-sm">
               Don't have an account?{" "}
-              <a href="#" className="link link-primary">
+              <Link to="/signup" className="link link-primary">
                 Register
-              </a>
+              </Link>
             </p>
           </form>
         </div>

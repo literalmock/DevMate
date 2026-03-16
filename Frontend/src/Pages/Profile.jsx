@@ -12,14 +12,13 @@ const Profile = () => {
     <div className="min-h-screen bg-base-200 flex items-center justify-center p-6">
       
       <div className="flex w-full max-w-7xl gap-12">
-        
         {/* LEFT - FORM */}
         <div className="flex-1">
           <EditProfile user={user} />
         </div>
         {/* RIGHT - PREVIEW */}
         <div className="flex-1 flex items-center justify-center">
-          <TinderCard user={user} />
+          <TinderCard user={user}  swipeable={false}/>
         </div>
 
       </div>

@@ -35,7 +35,7 @@ const Navbar = () => {
     <div className="navbar bg-base-100 shadow-md px-4">
       
       {/* LEFT SIDE */}
-      <div className="flex-1" onClick={()=> navigate("/feed")}>
+      <div className="flex-1" onClick={()=> user ? navigate("/feed") : navigate("/login")}>
         <a className="btn btn-ghost text-xl">Devmate</a>
       </div>
 
@@ -84,6 +84,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li><Link to="/connections">Connections</Link></li>
+            <li><Link to="/requests">Requests</Link></li>
             <li>
               <a className="text-error" onClick={handleLogout} >Logout</a>
             </li>

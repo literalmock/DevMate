@@ -1,7 +1,7 @@
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import React from "react";
 
-const TinderCard = ({ user, onSwipe }) => {
+const TinderCard = ({ user, onSwipe , swipeable }) => {
   const x = useMotionValue(0);
 
   const rotate = useTransform(x, [-300, 300], [-25, 25]);
@@ -33,11 +33,12 @@ const TinderCard = ({ user, onSwipe }) => {
 
   return (
     <motion.div
-      drag="x"
+    drag={swipeable ? "x" : false}
+  onDragEnd={swipeable ? handleDragEnd : undefined}
+  style={{ x, rotate, opacity }}
+  dragConstraints={{ left: 0, right: 0 }}
+  // className="absolute w-[90vw] max-w-[420px] h-[75vh] bg-base-100 rounded-3xl shadow-2xl overflow-hidden"
       dragElastic={0.8}
-      dragConstraints={{ left: 0, right: 0 }}
-      onDragEnd={handleDragEnd}
-      style={{ x, rotate, opacity }}
       whileTap={{ cursor: "grabbing" }}
       className="absolute w-[90vw] max-w-[420px] h-[75vh] bg-base-100 rounded-3xl shadow-2xl overflow-hidden cursor-grab select-none"
     >

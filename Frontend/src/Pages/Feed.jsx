@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addFeed } from "../utils/feedSlice";
+import { addFeed, removeUserFromFeed } from "../utils/feedSlice";
 import TinderCard from "../Components/TinderCard";
 import {Skiper39} from "../Components/ui/skiper-ui/skiper39";
 import { useRenderCount } from "@uidotdev/usehooks";
@@ -10,7 +10,8 @@ const Feed = () => {
   const dispatch = useDispatch();
   const feed = useSelector((store) => store.feed);
   const [users, setUsers] = useState([]);
-  const [showAnimation, setShowAnimation] = useState(false);
+  // const [showAnimation, setShowAnimation] = useState(false);
+  const [processingUserId, setProcessingUserId] = useState(null);
   // const renderCount = useRenderCount();
   // console.log("Feed Render Count:", renderCount);
   useEffect(() => {
@@ -36,11 +37,35 @@ const Feed = () => {
       });
   }, []);
 
-  const handleSwipe = (direction, user) => {
-    console.log(direction, user);
+  const handleSwipe = async (direction, user) => {
+    if (!user?._id || processingUserId) {
+      return;
+    }
 
-    // Remove swiped user from UI
-    setUsers((prev) => prev.filter((u) => u._id !== user._id));
+    const status = direction === "right" ? "interested" : "ignore";
+    setProcessingUserId(user._id);
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/request/sent/${status}/${user._id}`,
+        {},
+        { withCredentials: true }
+      );
+
+      setUsers((prev) => prev.filter((u) => u._id !== user._id));
+      dispatch(removeUserFromFeed(user._id));
+
+      if (direction === "right") {
+        setShowAnimation(true);
+        setTimeout(() => {
+          setShowAnimation(false);
+        }, 1200);
+      }
+    } catch (err) {
+      console.error("Request send error:", err?.response?.data || err.message);
+    } finally {
+      setProcessingUserId(null);
+    }
   };
 
   if (!users.length) {
@@ -59,6 +84,7 @@ const Feed = () => {
           key={user._id}
           user={user}
           onSwipe={handleSwipe}
+          swipeable={true}
         />
       ))}
     </div>
@@ -71,12 +97,6 @@ const Feed = () => {
     ❌
   </button>
 </div>
-{ showAnimation && (
-    <div className="fixed bottom-0 left-0 w-full pointer-events-none">
-<Skiper39/>
-</div>
-   )
-}
     </div> 
   );
 };

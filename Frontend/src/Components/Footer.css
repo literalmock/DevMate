@@ -10,13 +10,13 @@
   margin: auto;
   padding: 18px 22px;
 
-  background: #fff9e8;
-  border: 4px solid #2b2b2b;
-  border-radius: 20px;
-  box-shadow: 6px 6px 0 #2b2b2b;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
@@ -31,13 +31,13 @@
 
 .footer-logo {
   font-size: 22px;
-  font-weight: 900;
-  color: #2b2b2b;
+  font-weight: 700;
+  color: #1976d2;
 }
 
 .footer-left p {
   font-size: 14px;
-  color: #555;
+  color: #616161;
 }
 
 /* RIGHT (SOCIAL ICONS) */
@@ -50,46 +50,58 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: 3px solid #2b2b2b;
-  background: #f4db6c;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  box-shadow: 3px 3px 0 #2b2b2b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   transition: all 0.2s ease;
 }
 
 .footer-right a:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 #2b2b2b;
+  transform: translateY(-1px);
+  border-color: #1976d2;
+  box-shadow: 0 3px 8px rgba(25, 118, 210, 0.25);
+  background: #e3f2fd;
 }
 
 .footer-right svg {
   width: 20px;
   height: 20px;
-  fill: #2b2b2b;
+  fill: #1976d2;
 }
 
-/* 🌙 DARK MODE */
-body.dark-theme .footer-inner {
+/* DARK THEME */
+[data-theme="dark"] .footer-inner {
+  background: #1e1e1e;
+  border-color: #3a3a3a;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .footer-logo,
+[data-theme="dark"] .footer-left p {
+  color: #f5f5f5;
+}
+
+[data-theme="dark"] .footer-logo {
+  color: #90caf9;
+}
+
+[data-theme="dark"] .footer-right a {
   background: #2a2a2a;
-  border-color: #f4db6c;
-  box-shadow: 6px 6px 0 #f4db6c;
+  border-color: #4a4a4a;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
 }
 
-body.dark-theme .footer-logo,
-body.dark-theme .footer-left p {
-  color: #f4db6c;
+[data-theme="dark"] .footer-right a:hover {
+  background: #1e3a56;
+  border-color: #90caf9;
+  box-shadow: 0 3px 8px rgba(144, 202, 249, 0.25);
 }
 
-body.dark-theme .footer-right a {
-  background: #1f1f1f;
-  border-color: #f4db6c;
-  box-shadow: 3px 3px 0 #f4db6c;
-}
-
-body.dark-theme .footer-right svg {
-  fill: #f4db6c;
+[data-theme="dark"] .footer-right svg {
+  fill: #90caf9;
 }

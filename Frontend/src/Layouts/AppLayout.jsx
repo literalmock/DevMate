@@ -5,10 +5,12 @@ import './applayout.css'
 import { useEffect } from 'react';
 import { addUser } from '../utils/userSlice';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const AppLayout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((store) => store.user);
+    
     const fetchUser = async () => {
       try {
         const response = await axios.get(import.meta.env.VITE_BASE_URL + '/profile/view', { withCredentials: true });
@@ -19,7 +21,9 @@ const AppLayout = () => {
       }
     };
     useEffect(()=>{
-      fetchUser()
+      if (!user) {
+        fetchUser()
+      }
     },[])
   
   return (
