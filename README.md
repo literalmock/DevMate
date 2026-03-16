@@ -138,3 +138,9 @@ The repository is organized into two main folders: `Backend` and `Frontend`.
         ├── utils/      # Redux Toolkit store and data slices
         ├── App.jsx     # Main component with React Router setup
         └── main.jsx    # Application entry point
+
+
+#### #### Note
+
+This project primarily focuses on **backend architecture and REST API development**.  
+The frontend is intentionally minimal and was not the main focus of the project.
