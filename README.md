@@ -140,7 +140,7 @@ The repository is organized into two main folders: `Backend` and `Frontend`.
         └── main.jsx    # Application entry point
 
 
-#### #### Note
+#### Note
 
 This project primarily focuses on **backend architecture and REST API development**.  
 The frontend is intentionally minimal and was not the main focus of the project.
